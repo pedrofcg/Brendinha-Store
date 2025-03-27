@@ -10,7 +10,7 @@ interface ProductGridProps {
 const products: Product[] = [
   {
     id: '1',
-    name: 'Vestido Floral Midi',
+    name: 'Vestido Floral ',
     price: 299.90,
     image: 'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=1000',
     category: 'Vestidos',

@@ -11,14 +11,11 @@ interface ProductPreviewProps {
 }
 
 export function ProductPreview({ product, isOpen, onClose }: ProductPreviewProps) {
-  const [selectedSize, setSelectedSize] = useState<string>(''); 
+  const [selectedSize, setSelectedSize] = useState<string>('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const sizes = ['P', 'M', 'G'];
-  const images = [
-    product.image,
-    ...(product.images || []),
-  ];
+  const images = [product.image, ...(product.images || [])];
 
   const whatsappMessage = encodeURIComponent(
     `Olá! Gostaria de saber mais sobre o produto: ${product.name}${selectedSize ? ` - Tamanho ${selectedSize}` : ''}`
@@ -28,7 +25,6 @@ export function ProductPreview({ product, isOpen, onClose }: ProductPreviewProps
   return (
     <Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <Dialog.Portal>
-        {/* Overlay para todas as telas */}
         <Dialog.Overlay className="fixed inset-0 bg-black/50 z-50" />
         
         <Dialog.Content asChild>
@@ -36,20 +32,22 @@ export function ProductPreview({ product, isOpen, onClose }: ProductPreviewProps
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 100 }}
-            className="fixed bottom-0 md:bottom-auto md:left-1/3 md:top-1/3
+            className="fixed bottom-0 md:bottom-auto md:left-1/2 md:top-1/2 
               md:-translate-x-1/2 md:-translate-y-1/2 w-full md:max-w-4xl 
               bg-white p-4 rounded-t-2xl md:rounded-lg shadow-xl z-50 
               max-h-[90vh] overflow-y-auto"
+            drag="y"
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={{ top: 0, bottom: 0.5 }}
+            onDragEnd={(_, info) => info.offset.y > 100 && onClose()}
           >
-            {/* Botão de fechar mobile */}
-            <div className="md:hidden absolute top-2 right-2">
-              <Dialog.Close className="p-2 text-gray-500">
-                <X className="w-6 h-6" />
-              </Dialog.Close>
+            {/* Swipe indicator for mobile */}
+            <div className="md:hidden absolute top-2 left-1/2 -translate-x-1/2">
+              <div className="w-12 h-1.5 bg-gray-300 rounded-full mb-2" />
             </div>
 
             <div className="flex flex-col md:grid md:grid-cols-2 gap-4 md:gap-8">
-              {/* Seção de Imagem */}
+              {/* Image Section */}
               <div className="space-y-4">
                 <div className="aspect-[3/4] relative overflow-hidden rounded-lg">
                   <img
@@ -59,7 +57,7 @@ export function ProductPreview({ product, isOpen, onClose }: ProductPreviewProps
                   />
                   {product.isOffer && (
                     <div className="absolute top-2 right-2 bg-accent-terracotta text-white px-2 py-1 rounded-full text-xs md:text-sm">
-                      {Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100)}% OFF
+                      {Math.round(((product.originalPrice! - product.price) / product.originalPrice! * 100))}% OFF
                     </div>
                   )}
                 </div>
@@ -74,28 +72,32 @@ export function ProductPreview({ product, isOpen, onClose }: ProductPreviewProps
                       >
                         <img
                           src={image}
-                          alt={`${product.name} - Imagem ${index + 1}`}
+                          alt={`${product.name} ${index + 1}`}
                           className="object-cover w-full h-full"
                         />
+                        {currentImageIndex === index && (
+                          <div className="absolute inset-0 border-2 border-primary-800 rounded-md" />
+                        )}
                       </button>
                     ))}
                   </div>
                 )}
               </div>
 
-              {/* Seção de Detalhes */}
+              {/* Details Section */}
               <div className="space-y-4 md:space-y-6">
-                <div className="pr-8">
+                <div className="pr-8 relative">
                   <Dialog.Title className="text-xl md:text-2xl font-medium text-primary-800">
                     {product.name}
                   </Dialog.Title>
+                  <Dialog.Close className="md:hidden absolute -top-2 -right-2 p-2 text-gray-500">
+                    <X className="w-6 h-6" />
+                  </Dialog.Close>
                 </div>
 
-                <p className="text-gray-600 text-sm md:text-base">
-                  {product.description}
-                </p>
+                <p className="text-gray-600 text-sm md:text-base">{product.description}</p>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col md:flex-row md:items-center gap-2">
                   <span className="text-xl md:text-2xl font-semibold text-primary-800">
                     R$ {product.price.toFixed(2)}
                   </span>
@@ -107,9 +109,7 @@ export function ProductPreview({ product, isOpen, onClose }: ProductPreviewProps
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-medium text-gray-700 mb-2">
-                    Tamanhos disponíveis
-                  </h3>
+                  <h3 className="text-sm font-medium text-gray-700 mb-2">Tamanhos disponíveis</h3>
                   <div className="flex gap-2 flex-wrap">
                     {sizes.map((size) => (
                       <button
@@ -130,9 +130,11 @@ export function ProductPreview({ product, isOpen, onClose }: ProductPreviewProps
 
                 <a
                   href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full bg-green-500 hover:bg-green-600 text-white py-3 
-                    rounded-lg font-medium transition-colors flex items-center justify-center gap-2 
-                    text-sm md:text-base"
+                    rounded-lg font-medium transition-colors flex items-center 
+                    justify-center gap-2 text-sm md:text-base"
                 >
                   <MessageSquare className="w-4 h-4 md:w-5 md:h-5" />
                   <span>Consultar disponibilidade</span>
@@ -145,4 +147,3 @@ export function ProductPreview({ product, isOpen, onClose }: ProductPreviewProps
     </Dialog.Root>
   );
 }
-

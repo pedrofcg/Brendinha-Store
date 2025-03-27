@@ -28,7 +28,7 @@ export function ProductPreview({ product, isOpen, onClose }: ProductPreviewProps
   return (
     <Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-black/50 z-50" />
+        <Dialog.Overlay className="fixed inset-0 bg-black/50 z-50 hidden md:block" />
         <Dialog.Content asChild>
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}

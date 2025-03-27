@@ -34,7 +34,7 @@ export function ProductPreview({ product, isOpen, onClose }: ProductPreviewProps
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="fixed left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl bg-white p-6 rounded-lg shadow-xl z-50 max-h-[90vh] overflow-y-auto"
+            className="hidden md:block fixed left-1/3 top-1/3 -translate-x-1/2 -translate-y-1/2 w-full max-w-[90vw] sm:max-w-4xl bg-white p-4 sm:p-6 rounded-lg shadow-xl z-50 h-auto overflow-y-auto"
           >
             <div className="flex justify-between items-center mb-4">
               <Dialog.Title className="text-2xl font-medium text-primary-800">

@@ -11,7 +11,7 @@ interface ProductPreviewProps {
 }
 
 export function ProductPreview({ product, isOpen, onClose }: ProductPreviewProps) {
-  const [selectedSize, setSelectedSize] = useState<string>('');
+  const [selectedSize, setSelectedSize] = useState<string>(''); 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const sizes = ['P', 'M', 'G'];
@@ -47,7 +47,7 @@ export function ProductPreview({ product, isOpen, onClose }: ProductPreviewProps
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center justify-center text-center">
               <div className="flex flex-col items-center space-y-4">
-                <div className="aspect-[3/4] relative overflow-hidden rounded-lg w-72">
+                <div className="aspect-[3/4] relative overflow-hidden rounded-lg w-full sm:w-72">
                   <img
                     src={images[currentImageIndex]}
                     alt={product.name}
@@ -99,7 +99,7 @@ export function ProductPreview({ product, isOpen, onClose }: ProductPreviewProps
 
                 <div>
                   <h3 className="text-sm font-medium text-gray-700 mb-2">Tamanhos disponíveis</h3>
-                  <div className="flex gap-2 justify-center">
+                  <div className="flex gap-2 justify-center flex-wrap">
                     {sizes.map((size) => (
                       <button
                         key={size}
@@ -133,3 +133,4 @@ export function ProductPreview({ product, isOpen, onClose }: ProductPreviewProps
     </Dialog.Root>
   );
 }
+

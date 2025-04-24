@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { MessageSquare } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export function Hero() {
   const whatsappLink = "https://wa.me/5564981636063?text=Olá! Gostaria de saber mais sobre a coleção.";
@@ -40,12 +41,12 @@ export function Hero() {
               <MessageSquare className="w-4 h-4" />
               <span>Fale Conosco</span>
             </a>
-            <a
-              href="/nova-colecao"
+            <Link
+              to="/nova-colecao"
               className="bg-white/90 hover:bg-white text-primary-800 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-colors flex items-center justify-center"
             >
               Explore a Coleção
-            </a>
+            </Link>
           </div>
         </motion.div>
       </div>
